@@ -12,6 +12,7 @@ stage('Source') {
 }
 
 try {
+  /*
   stage('Unit tests') {
     parallel 'centos6': {
       node {
@@ -71,8 +72,10 @@ try {
       error('Unit tests stage failure.');
     }
   }
+  */
 
   stage('Package') {
+    /*
     parallel 'centos6': {
       node {
         sh 'cd /opt/centreon-build && git pull && cd -'
@@ -91,11 +94,19 @@ try {
         sh '/opt/centreon-build/jobs/web/3.5/mon-web-package.sh debian9'
       }
     }
+    */
+    parallel 'debian9-armhf': {
+      node {
+        sh 'cd /opt/centreon-build && git pull && cd -'
+	sh '/opt/centreon-build/jobs/web/3.5/mon-web-package.sh debian9-armhf'
+      }
+    }
     if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
       error('Package stage failure.');
     }
   }
 
+  /*
   stage('Bundle') {
     parallel 'centos6': {
       node {
@@ -149,6 +160,7 @@ try {
       error('Critical tests stage failure.');
     }
   }
+  */
 
   if (env.BRANCH_NAME == 'master') {
     stage('Acceptance tests') {
