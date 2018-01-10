@@ -136,7 +136,7 @@ try {
             [$class: 'FailedThreshold', failureThreshold: '0'],
             [$class: 'SkippedThreshold', failureThreshold: '0']
           ],
-          tools: [[$class: 'JUnitType', pattern: 'xunit-reports/**/*.xml']]
+          tools: [[$class: 'JUnitType', pattern: 'xunit-reports/ * * / * .xml']]
         ])
         archiveArtifacts allowEmptyArchive: true, artifacts: 'acceptance-logs/*.txt, acceptance-logs/*.png'
       }
@@ -151,7 +151,7 @@ try {
             [$class: 'FailedThreshold', failureThreshold: '0'],
             [$class: 'SkippedThreshold', failureThreshold: '0']
           ],
-          tools: [[$class: 'JUnitType', pattern: 'xunit-reports/**/*.xml']]
+          tools: [[$class: 'JUnitType', pattern: 'xunit-reports/ * * / * .xml']]
         ])
         archiveArtifacts allowEmptyArchive: true, artifacts: 'acceptance-logs/*.txt, acceptance-logs/*.png'
       }
