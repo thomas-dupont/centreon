@@ -1222,17 +1222,21 @@ function reload_service_apache() {
 		service="apache"
 	elif [ -x /etc/init.d/httpd ] ; then
 		service="httpd"
-	elif [ -x /bin/systemctl ] ; then
-	    local count_service=$(/bin/systemctl list-units | grep httpd | wc -l)
-	    if [ "$count_service" -gt "0" ] ; then
-	        service="httpd"
-	    fi
 	elif [ -x /etc/init.d/apache2 ] ; then
 		service="apache2"
 	elif [ -x /usr/local/etc/rc.d/apache ] ; then
 		service="apache"
 	elif [ -x /usr/local/etc/rc.d/apache2 ]; then
 		service="apache2"
+	elif [ -x /bin/systemctl ] ; then
+	    local count_service=$(/bin/systemctl list-units | grep httpd | wc -l)
+	    if [ "$count_service" -gt "0" ] ; then
+	        service="httpd"
+	    fi
+	    local count_service=$(/bin/systemctl list-units | grep apache2 | wc -l)
+	    if [ "$count_service" -gt "0" ] ; then
+	        service="apache2"
+	    fi
 	else
 		echo_warning "$(gettext "Unable to restart Apache server")" "$warning"
 		log "WARN" "$(gettext "Unable to restart Apache server")"
